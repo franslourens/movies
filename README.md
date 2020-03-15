@@ -1,4 +1,4 @@
 # movies
 
-Example project on [go](http://www.franslourens.co.za){:target="_blank"} (normal port 80)
+Example project on <a href="http://stackoverflow.com" target="_blank">Go</a> (normal port 80)
 Website: https://franslourens.co.za
