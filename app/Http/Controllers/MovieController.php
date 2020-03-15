@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\Movie;
 use App\Http\Resources\MovieCollection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -68,7 +69,8 @@ class MovieController extends Controller
      */
     public function show($id)
     {
-        //
+        $movie = Movie::get_details($id);
+	return view('movie.show', ["movie" => $movie]);
     }
 
     /**

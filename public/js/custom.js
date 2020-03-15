@@ -23,7 +23,7 @@ $(document).ready(function(){
         
         var tr = "<tr>"+
 				  "<td style='text-align:center; vertical-align:middle;'><img width='50%' height='50%' src='https://image.tmdb.org/t/p/original/" + item.poster_path + "'</img></td>" +
-                  "<td>" + item.title + "</td>" +
+                  "<td><a href='/movies/" + item.id + "' target='_blank' >" + item.title + "</a></td>" +
                   "<td>" + item.overview + "</td>" +
 				  "<td>" + item.genres + "</td>" +
                   "<td>" + item.vote_average + "</td>";

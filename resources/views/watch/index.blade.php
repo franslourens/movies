@@ -41,7 +41,7 @@
 						   @if( count( $movies ) > 0 )
 							   @foreach($movies as $movie) 
 							   <tr>
-								<td>{{$movie["title"]}}</td>
+								<td><a href="/movies/{{$movie["id"]}}" target="_blank">{{$movie["title"]}}</a></td>
 								<td>{{$movie["overview"]}}</td>
 								<td>@foreach ($movie["genres"] as $key => $value)
 										@if( count( $movie["genres"] ) != $key + 1 )
