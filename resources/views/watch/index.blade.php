@@ -34,24 +34,29 @@
                             <th>Overview</th>
 							<th>Genre</th>
                             <th>Rating</th>
+							<th></th>
                            </tr>
-						   @foreach($movies as $movie) 
-						   <tr>
-							<td>{{$movie["title"]}}</td>
-							<td>{{$movie["overview"]}}</td>
-							<td>@foreach ($movie["genres"] as $key => $value)
-									@if( count( $movie["genres"] ) != $key + 1 )
-										{{ $value["name"] }}.
-									 @else
-										{{ $value["name"] }}
-									@endif
-								@endforeach</td>
-							<td>{{$movie["vote_average"]}}</td>
-						   </tr>
-						   @endforeach
-                          </thead>
-                          <tbody>
-                   
+						  </thead>
+						  <tbody>
+						   @if( count( $movies ) > 0 )
+							   @foreach($movies as $movie) 
+							   <tr>
+								<td>{{$movie["title"]}}</td>
+								<td>{{$movie["overview"]}}</td>
+								<td>@foreach ($movie["genres"] as $key => $value)
+										@if( count( $movie["genres"] ) != $key + 1 )
+											{{ $value["name"] }}.
+										 @else
+											{{ $value["name"] }}
+										@endif
+									@endforeach</td>
+								<td>{{$movie["vote_average"]}}</td>
+								<td><button class="btn btn-danger" data-id="{{ $movie["id"] }}" data-url="/watch/" onclick="remove_from_watch($(this))">Remove <i class='fa fa-spinner fa-spin' style='display:none;'></i></button></td>
+							   </tr>
+							   @endforeach
+						   @else
+						   <tr><td colspan="5" style="text-align:center">No movies to watch.</td></tr>
+					       @endif
                           </tbody>
                          </table>
                         </div>
@@ -62,5 +67,5 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="{{ URL::asset('js/user.js') }}"></script>
 @endsection
