@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Watch;
+use App\Http\Resources\Movie;
 
 class WatchController extends Controller
 {
@@ -12,9 +13,18 @@ class WatchController extends Controller
         $this->middleware('auth');
     }
     
-    public function index(Request $request)
+	public function index(Request $request)
     {
-        return view('watch.index');
+        $watch_list = $request->user()->watch()->get();
+        
+        $movies = [];
+        
+        foreach($watch_list as $watch)
+        {
+            $movies[] = Movie::get_details($watch->movie_id);
+        }
+
+        return view('watch.index', ["movies" => $movies]);
     }
     
 

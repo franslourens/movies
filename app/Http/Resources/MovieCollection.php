@@ -21,7 +21,7 @@ class MovieCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection,
-             'links' => $this->links()
+            'links' => $this->links()
         ];
     }
     
@@ -29,7 +29,7 @@ class MovieCollection extends ResourceCollection
     {
         $query = $params["query"];
         $page = $params["page"];
-        
+
         $popular_url = MovieCollection::base_url . "movie/popular?" . http_build_query(["api_key" => MovieCollection::api_key,
                                                                                        "page" => $page]);
                                                                                
@@ -51,24 +51,64 @@ class MovieCollection extends ResourceCollection
         
         $data = json_decode($response, true);
 
-        $movies["page"] = $data["page"];
-        $movies["total_results"] = $data["total_results"];
-        $movies["total_pages"] = $data["total_pages"];
-        
-        foreach($data["results"] as $movie)
-        {
-            $movies["results"][] = Movie::make(["id" => $movie["id"],
-                                                "title" => $movie["title"],
-                                                "original_title" => $movie["original_title"],
-                                                "overview" => $movie["overview"],
-                                                "popularity" => $movie["popularity"],
-                                                "vote_average" => $movie["vote_average"],
-                                                "poster_path" => $movie["poster_path"],
-                                                "release_date" => $movie["release_date"],
-                                                "original_language" => $movie["original_language"]
-                                                ]);
-        }
-        
-        return $movies;
+		if($data)
+		{
+			$genres = Movie::genres(MovieCollection::base_url, MovieCollection::api_key);
+			
+			$movies["page"] = $data["page"];
+			$movies["total_results"] = $data["total_results"];
+			$movies["total_pages"] = $data["total_pages"];
+
+			
+			foreach($data["results"] as $movie)
+			{					
+				$movie_id = intval($movie["id"]);
+				$movie_genres[$movie_id][] = [];
+					
+				foreach($movie["genre_ids"] as $id)
+				{
+					foreach($genres as $genre)
+					{
+						if($genre["id"] == $id)
+						{
+							$movie_genres[$movie_id][] = $genre["name"];
+						}
+					}
+				}
+
+				$release_date = "N\A";
+				
+				if(isset($movie["release_date"]) && !empty($movie["release_date"]))
+				{
+					$release_date = $movie["release_date"];
+				}
+				
+				$movies["results"][] = Movie::make(["id" => $movie_id,
+													"title" => $movie["title"],
+													"original_title" => $movie["original_title"],
+													"overview" => $movie["overview"],
+													"popularity" => $movie["popularity"],
+													"vote_average" => $movie["vote_average"],
+													"poster_path" => $movie["poster_path"],
+													"release_date" => $release_date,
+													"original_language" => $movie["original_language"],
+													"genres" => $movie_genres[$movie_id]
+													]);
+			}
+			
+			return $movies;
+		}
+		
+		return ["page" => 1, "total_results" => 1, "total_pages" => 1, "results" => [Movie::make(["id" => "", 
+																								  "title" => "", 
+																								  "original_title" => "", 
+																								  "overview" => "",
+																								  "popularity" => "",
+																								  "vote_average" => "",
+																								  "poster_path" => "",
+																								  "release_date" => "",
+																								  "original_language" => "",
+																								  "genres" => ""
+																								  ])]];
     }
 }
