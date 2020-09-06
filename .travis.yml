@@ -1,0 +1,11 @@
+language: generic
+sudo: required
+services:
+  - docker
+  
+after_success:
+  - docker build -t franslourens/movies .
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push franslourens/movies
