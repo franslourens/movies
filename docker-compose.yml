@@ -1,0 +1,24 @@
+version: '3.4'
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /var/www/movies/vendor
+      - .:/var/www/movies
+      - socket:/socket
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/var/www
+      - socket:/socket
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+        - php
+volumes:
+  socket:

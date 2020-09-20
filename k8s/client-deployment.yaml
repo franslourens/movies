@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: client-deployment
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      component: web
+  template: 
+    metadata: 
+      labels: 
+        component: web
+    spec:
+      volumes:
+        - name: code
+          emptyDir: {} 
+        - name: sock
+          emptyDir: {}
+      imagePullSecrets:
+        - name: regcred
+      containers: 
+        - 
+          image: franslourens/nginx-laravel
+          name: nginx
+          imagePullPolicy: Always
+          ports: 
+            - 
+              containerPort: 80
+          volumeMounts:
+            - 
+              name: code
+              mountPath: /var/www/laravel
+            - 
+              name: sock
+              mountPath: /sock
+        - 
+          image: franslourens/php-laravel
+          env:
+            - name: MYSQL_HOST
+              value: mysql-cluster-ip-service
+            - name: MYSQL_PORT
+              value: "3306"
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysqlpassword
+                  key: mysqlpassword
+            - name: MEMCACHE_HOST
+              value: memcache-cluster-ip-service
+            - name: MEMCACHE_PORT
+              value: "11211"
+            - name: AUTH_HOST
+              value: client-cluster-ip-service
+          imagePullPolicy: Always
+          name: fpm
+          volumeMounts:
+            - 
+              name: code
+              mountPath: /var/www/laravel
+            - 
+              name: sock
+              mountPath: /sock
