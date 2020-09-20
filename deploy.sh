@@ -1,5 +1,5 @@
 docker build -t franslourens/nginx-laravel:latest -t franslourens/nginx-laravel:$SHA -f ./nginx/Dockerfile ./nginx
-docker build -t franslourens/php-laravel:latest -t franslourens/php-laravel:$SHA -f ./php/Dockerfile ./php
+docker build -t franslourens/php-laravel:latest -t franslourens/php-laravel:$SHA -f Dockerfile .
 
 docker push franslourens/nginx-laravel:latest
 docker push franslourens/php-laravel:latest
