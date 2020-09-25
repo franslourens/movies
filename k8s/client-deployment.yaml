@@ -17,8 +17,6 @@ spec:
           emptyDir: {} 
         - name: sock
           emptyDir: {}
-      imagePullSecrets:
-        - name: regcred
       containers: 
         - 
           image: franslourens/nginx-laravel
@@ -30,7 +28,7 @@ spec:
           volumeMounts:
             - 
               name: code
-              mountPath: /var/www/laravel
+              mountPath: /var/www/movies
             - 
               name: sock
               mountPath: /sock
@@ -57,7 +55,7 @@ spec:
           volumeMounts:
             - 
               name: code
-              mountPath: /var/www/laravel
+              mountPath: /var/www/movies
             - 
               name: sock
               mountPath: /sock
