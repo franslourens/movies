@@ -6,7 +6,7 @@ RUN adduser --uid 1000 --system --disabled-login --disabled-password --gid 1000 
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 RUN rm /usr/local/etc/php-fpm.d/zz-docker.conf
 
-WORKDIR /var/www/movies
+WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -33,5 +33,3 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY . .
 
 RUN composer install
-
-COPY . .
