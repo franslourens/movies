@@ -28,7 +28,7 @@ spec:
           volumeMounts:
             - 
               name: code
-              mountPath: /var/www/movies
+              mountPath: /var/www
             - 
               name: sock
               mountPath: /socket
@@ -55,7 +55,7 @@ spec:
           volumeMounts:
             - 
               name: code
-              mountPath: /var/www/movies
+              mountPath: /var/www
             - 
               name: sock
               mountPath: /socket
