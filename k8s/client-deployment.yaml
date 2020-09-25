@@ -31,7 +31,7 @@ spec:
               mountPath: /var/www/movies
             - 
               name: sock
-              mountPath: /sock
+              mountPath: /socket
         - 
           image: franslourens/php-laravel
           env:
@@ -58,4 +58,4 @@ spec:
               mountPath: /var/www/movies
             - 
               name: sock
-              mountPath: /sock
+              mountPath: /socket
