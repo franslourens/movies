@@ -8,4 +8,4 @@ docker push franslourens/nginx-laravel:$SHA
 docker push franslourens/php-laravel:$SHA
 
 kubectl apply -f k8s
-kubectl set image deployments/client-deployment client=franslourens/php-laravel:$SHA
+kubectl set image deployments/client-deployment fpm=franslourens/php-laravel:$SHA
