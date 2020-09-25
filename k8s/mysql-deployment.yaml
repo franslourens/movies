@@ -75,5 +75,5 @@ spec:
   selector:
     app: phpmyadmin
   ports:
-    - port: 8080
+    - port: 80
       targetPort: 80
