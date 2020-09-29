@@ -17,6 +17,18 @@ spec:
           emptyDir: {} 
         - name: sock
           emptyDir: {}
+    initContainers:
+      - args:
+          - /bin/bash
+          - -c
+          - (php artisan config:cache || true) && (php
+            artisan route:cache || true) && (cp -rp /app/ /var/www/movies)
+        image: franslourens/php-laravel
+        name: artisan
+        volumeMounts:
+          - 
+            name: code
+            mountPath: /var/www
       containers: 
         - 
           image: franslourens/nginx-laravel
