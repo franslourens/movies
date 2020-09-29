@@ -12,23 +12,11 @@ spec:
       labels: 
         component: web
     spec:
-      initContainers:
-        - name: startup
-          image: franslourens/php-laravel
-        - args:
-            - /bin/bash
-            - -c
-            - (php artisan config:cache || true) && (php
-              artisan route:cache || true) && (cp -rp /app/ /var/www/movies/)
-          volumeMounts:
-            - 
-              name: code
-              mountPath: /var/www     
       volumes:
         - name: code
           emptyDir: {} 
         - name: sock
-          emptyDir: {}          
+          emptyDir: {}
       containers: 
         - 
           image: franslourens/nginx-laravel
@@ -71,3 +59,7 @@ spec:
             - 
               name: sock
               mountPath: /socket
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "cp -r /app/. /var/www/movies"]
