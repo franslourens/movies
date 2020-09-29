@@ -6,7 +6,7 @@ RUN adduser --uid 1000 --system --disabled-login --disabled-password --gid 1000 
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 RUN rm /usr/local/etc/php-fpm.d/zz-docker.conf
 
-COPY ./php.ini /usr/local/etc/php
+COPY php.ini /usr/local/etc/php
 
 WORKKDIR /app
 
