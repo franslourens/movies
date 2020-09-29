@@ -98,7 +98,3 @@ spec:
             - 
               name: sock
               mountPath: /socket
-          lifecycle:
-            postStart:
-              exec:
-                command: ["/bin/sh", "-c", "cp -r /app/. /var/www/movies"]
