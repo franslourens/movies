@@ -19,8 +19,8 @@ spec:
           - path: /
             # UPDATE THIS LINE ABOVE
             backend:
-            serviceName: client-cluster-ip-service
-            servicePort: 80
+              serviceName: client-cluster-ip-service
+              servicePort: 80
           - path: /phpmyadmin/
             # UPDATE THIS LINE ABOVE
             backend:
