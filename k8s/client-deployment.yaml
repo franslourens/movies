@@ -46,12 +46,12 @@ spec:
           - /bin/bash
           - -c
           - (php artisan config:cache || true) && (php
-            artisan route:cache || true) && (cp -rp /app/ /var/www/movies/)
+            artisan route:cache || true) && (chown -R app:www-data /app/ && cp -rp /app/ /var/www/movies/)
             && (chown -R app:www-data /var/www/movies/ && chown -R nginx:www-data /var/www/movies/bootstrap/cache)
             && (chmod -R 775 /var/www/movies/storage && chmod -R 775 /var/www/movies/bootstrap/cache)
         envFrom:
             - configMapRef:
-                name: laravel-todo-config
+                name: laravel-todo
         image: franslourens/php-laravel
         name: artisan
         volumeMounts:
@@ -95,7 +95,7 @@ spec:
           name: fpm
           envFrom:
              - configMapRef:
-                 name: laravel-todo-config
+                 name: laravel-todo
           volumeMounts:
             - 
               name: code
