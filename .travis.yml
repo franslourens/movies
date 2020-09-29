@@ -12,13 +12,13 @@ before_install:
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
   - gcloud auth activate-service-account --key-file service-account.json
-  - gcloud config set project multi-k8s-289815
+  - gcloud config set project staging-290814
   - gcloud config set compute/zone europe-west2-a
-  - gcloud container clusters get-credentials multi--cluster
+  - gcloud container clusters get-credentials staging
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-deploy:
-  provider: script
-  script: bash ./deploy.sh
-  on:
-    branch: master
+#deploy:
+#  provider: script
+#  script: bash ./deploy.sh
+#  on:
+#    branch: master
