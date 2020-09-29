@@ -7,7 +7,7 @@ metadata:
     #nginx.ingress.kubernetes.io/rewrite-target: /
     #nginx.ingress.kubernetes.io/whitelist-source-range: '165.0.108.101'
     #nginx.ingress.kubernetes.io/add-base-url: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /
     #nginx.ingress.kubernetes.io/proxy-body-size: "0"
     #nginx.org/client-max-body-size: "500m"
     nginx.ingress.kubernetes.io/use-regex: "true"
@@ -25,4 +25,4 @@ spec:
             # UPDATE THIS LINE ABOVE
             backend:
               serviceName: phpmyadmin-cluster-ip-service
-              servicePort: 80
+              servicePort: 8080
