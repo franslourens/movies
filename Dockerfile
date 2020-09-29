@@ -8,7 +8,7 @@ RUN rm /usr/local/etc/php-fpm.d/zz-docker.conf
 
 COPY php.ini /usr/local/etc/php
 
-WORKKDIR /app
+WORKDIR  /app
 
 RUN apt-get update && apt-get install -y \
     build-essential \
