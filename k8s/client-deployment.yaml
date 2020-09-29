@@ -8,7 +8,7 @@ data:
   APP_KEY=base64:pAPIqD/yZ+2P6PIOztj4vU4nfHP+T1pyn5n58eNPRyc=
   APP_DEBUG=false
   APP_URL=http://localhost
-  PP_LOG_LEVEL: debug
+  PP_LOG_LEVEL=debug
   LOG_CHANNEL=stack
   DB_CONNECTION=mysql
   DB_HOST=127.0.0.1
@@ -40,9 +40,7 @@ data:
   PUSHER_APP_CLUSTER=mt1
   MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
   MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
-  
 --- 
-
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -108,7 +106,7 @@ spec:
              - args:
                  - /bin/bash
                  - -c
-                 - (php artisan migrate || true) && (php artisan config:cache || true) && (php
+                 - (php artisan config:cache || true) && (php
                    artisan route:cache || true) && (cp -rp /app/ /var/www/movies/)
                envFrom:
                  - configMapRef:
