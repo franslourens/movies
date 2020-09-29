@@ -1,46 +1,3 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: laravel-todo
-data:
-  APP_NAME=Movies
-  APP_ENV=production
-  APP_KEY=base64:pAPIqD/yZ+2P6PIOztj4vU4nfHP+T1pyn5n58eNPRyc=
-  APP_DEBUG=false
-  APP_URL=
-  PP_LOG_LEVEL=debug
-  LOG_CHANNEL=stack
-  DB_CONNECTION=mysql
-  DB_HOST=127.0.0.1
-  DB_PORT=3306
-  DB_DATABASE=laravel
-  DB_USERNAME=root
-  DB_PASSWORD=password
-  BROADCAST_DRIVER=log
-  CACHE_DRIVER=file
-  QUEUE_CONNECTION=sync
-  SESSION_DRIVER=file
-  SESSION_LIFETIME=120
-  REDIS_HOST=127.0.0.1
-  REDIS_PASSWORD=null
-  REDIS_PORT=6379
-  MAIL_DRIVER=smtp
-  MAIL_HOST=smtp.mailtrap.io
-  MAIL_PORT=2525
-  MAIL_USERNAME=null
-  MAIL_PASSWORD=null
-  MAIL_ENCRYPTION=null
-  AWS_ACCESS_KEY_ID=
-  AWS_SECRET_ACCESS_KEY=
-  AWS_DEFAULT_REGION=us-east-1
-  AWS_BUCKET=
-  PUSHER_APP_ID=
-  PUSHER_APP_KEY=
-  PUSHER_APP_SECRET=
-  PUSHER_APP_CLUSTER=mt1
-  MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
-  MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
----
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -108,6 +65,3 @@ spec:
                  - -c
                  - (php artisan config:cache || true) && (php
                    artisan route:cache || true) && (cp -rp /app/ /var/www/movies/)
-               envFrom:
-                 - configMapRef:
-                     name: laravel-todo-config
