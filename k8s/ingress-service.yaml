@@ -16,11 +16,11 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
+          #- path: /
             # UPDATE THIS LINE ABOVE
-            backend:
-              serviceName: client-cluster-ip-service
-              servicePort: 80
+          # backend:
+          #  serviceName: client-cluster-ip-service
+          #  servicePort: 80
           - path: /phpmyadmin/
             # UPDATE THIS LINE ABOVE
             backend:

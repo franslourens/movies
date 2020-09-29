@@ -10,5 +10,6 @@ docker push franslourens/php-laravel:$SHA
 kubectl apply -f k8s/database-persistent-volume-claim.yaml
 kubectl apply -f k8s/mysql-cluster-ip-service.yaml
 kubectl apply -f k8s/mysql-deployment.yaml
+kubectl apply -f k8s/ingress-service.yaml
 
-kubectl set image deployments/client-deployment fpm=franslourens/php-laravel:$SHA
+#kubectl set image deployments/client-deployment fpm=franslourens/php-laravel:$SHA
