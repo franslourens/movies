@@ -1,3 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: laravel-todo
+data:
+  APP_DEBUG: "false"
+  APP_ENV: production
+  APP_KEY: base64:pAPIqD/yZ+2P6PIOztj4vU4nfHP+T1pyn5n58eNPRyc=
+  APP_LOG_LEVEL: debug
+  APP_NAME: "Kubernetes"
+  APP_URL: https://www.laravel.com
+  BROADCAST_DRIVER: pusher
+  CACHE_DRIVER: redis
+  QUEUE_DRIVER: redis
+  SESSION_DRIVER: redis
+  DB_CONNECTION: mysql
+  DB_DATABASE: task
+  DB_HOST: host
+  DB_PASSWORD: password
+  DB_PORT: "3306"
+  DB_USERNAME: username
+  REDIS_HOST: redis
+  REDIS_PORT: "6379"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -22,7 +46,10 @@ spec:
           - /bin/bash
           - -c
           - (php artisan config:cache || true) && (php
-            artisan route:cache || true) && (cp -rp /app/ /var/www/movies)
+            artisan route:cache || true) && (cp -rp /app/ /var/www/movies && chown -R app:www-data /var/www/movies/ && chown -R nginx:www-data /var/www/movies/bootstrap/cache && chmod -R 775 /var/www/movies/storage && chmod -R 775 /var/www/movies/bootstrap/cache)
+        envFrom:
+            - configMapRef:
+                name: laravel-todo-config
         image: franslourens/php-laravel
         name: artisan
         volumeMounts:
