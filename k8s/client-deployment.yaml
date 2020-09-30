@@ -60,7 +60,7 @@ spec:
             name: code
             mountPath: /var/www
         -   name: config
-            mountPath: "/var/www/movies/.env"
+            mountPath: "/app/.env"
             subPath: .env
       containers: 
         - 
