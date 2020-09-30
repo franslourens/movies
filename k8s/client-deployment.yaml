@@ -42,6 +42,9 @@ spec:
           emptyDir: {} 
         - name: sock
           emptyDir: {}
+        - name: config
+          configMap:
+            name: laravel-todo
     initContainers:
       - args:
           - /bin/bash
@@ -50,18 +53,15 @@ spec:
             artisan route:cache || true) && (chown -R app:www-data /app/ && cp -rp /app/ /var/www/movies/)
             && (chown -R app:www-data /var/www/movies/ && chown -R nginx:www-data /var/www/movies/bootstrap/cache)
             && (chmod -R 775 /var/www/movies/storage && chmod -R 775 /var/www/movies/bootstrap/cache)
-        envFrom:
-            - 
-                configMapRef:
-                    name: laravel-todo
         image: franslourens/php-laravel
         name: artisan
         volumeMounts:
           - 
             name: code
             mountPath: /var/www
-            configMap:
-                 name: laravel-todo
+        -   name: config
+            mountPath: "/var/www/movies/.env"
+            subPath: .env
       containers: 
         - 
           image: franslourens/nginx-laravel
@@ -97,16 +97,10 @@ spec:
               value: client-cluster-ip-service
           imagePullPolicy: Always
           name: fpm
-          envFrom:
-              - 
-                  configMapRef:
-                      name: laravel-todo
           volumeMounts:
             - 
               name: code
               mountPath: /var/www
-              configMap:
-                name: laravel-todo
             - 
               name: sock
               mountPath: /socket
