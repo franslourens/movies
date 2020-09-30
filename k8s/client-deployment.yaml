@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: laravel-todo
 data:
+ .env: |-
   APP_DEBUG: "false"
   APP_ENV: production
   APP_KEY: base64:pAPIqD/yZ+2P6PIOztj4vU4nfHP+T1pyn5n58eNPRyc=
