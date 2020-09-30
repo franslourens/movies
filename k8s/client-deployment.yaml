@@ -96,7 +96,7 @@ spec:
             - /bin/bash
             - -c
             - (chown -R app:www-data /app/ && cp -rp /app/ /var/www/movies/)
-              && (chown -R app:www-data /var/www/movies/ && chown -R nginx:www-data /var/www/movies/bootstrap/cache)
+              && (chown -R app:www-data /var/www/movies/ && chown -R app:www-data /var/www/movies/bootstrap/cache)
               && (chmod -R 775 /var/www/movies/storage && chmod -R 775 /var/www/movies/bootstrap/cache) && cp /etc/config/keys /var/www/movies/.env
           image: franslourens/php-laravel
           name: artisan
