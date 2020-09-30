@@ -23,6 +23,49 @@ data:
   REDIS_HOST: redis
   REDIS_PORT: "6379"
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-app-config
+data:
+  # ------------------------------------------------------------------------------
+  # app
+  # ------------------------------------------------------------------------------
+
+  APP_NAME: laravel
+  APP_ENV: local
+  APP_DEBUG: "true"
+  APP_URL: https://sample-laravel.localhost
+  #APP_KEY:
+
+  # NOTE: to use stern
+  LOG_CHANNEL: errorlog
+
+  # ------------------------------------------------------------------------------
+  # DB
+  # ------------------------------------------------------------------------------
+
+  DB_HOST: mysql
+  DB_USERNAME: root
+  DB_PASSWORD: root
+
+  DB_CONNECTION: mysql
+  DB_DATABASE: sample
+  DB_DATABASE_TEST: sample_test
+
+  REDIS_HOST: redis-master
+
+  # ------------------------------------------------------------------------------
+  # MAIL
+  # ------------------------------------------------------------------------------
+
+  MAIL_DRIVER: smtp
+  MAIL_HOST: smtp.mailtrap.io
+  MAIL_PORT: "2525"
+  MAIL_USERNAME: "null"
+  MAIL_PASSWORD: "null"
+  MAIL_ENCRYPTION: "null"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -42,12 +85,6 @@ spec:
           emptyDir: {} 
         - name: sock
           emptyDir: {}
-        - name: config
-          configMap:
-            name: laravel-todo
-            items:
-              - key: config
-                path: .env
     initContainers:
       - args:
           - /bin/bash
@@ -62,13 +99,14 @@ spec:
           - 
             name: code
             mountPath: /var/www
-        -   name: config
-            mountPath: "/app"
             
       containers: 
         - 
           image: franslourens/nginx-laravel
           name: nginx
+          envFrom:
+            - configMapRef:
+                name: sample-app-config
           imagePullPolicy: Always
           ports: 
             - 
@@ -100,9 +138,10 @@ spec:
               value: client-cluster-ip-service
           imagePullPolicy: Always
           name: fpm
+          envFrom:
+            - configMapRef:
+                name: sample-app-config
           volumeMounts:
-          -   name: config
-              mountPath: "/var/www"
             - 
               name: code
               mountPath: /var/www
