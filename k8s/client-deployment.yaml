@@ -54,7 +54,7 @@ kind: Deployment
 metadata: 
   name: client-deployment
 spec: 
-  replicas: 3
+  replicas: 1
   selector: 
     matchLabels: 
       component: web
@@ -74,6 +74,9 @@ spec:
             items:
             - key: config
               path: env
+        - name: secret-volume
+          secret:
+            secretName: staging
       initContainers:
         - args:
             - /bin/bash
@@ -96,7 +99,9 @@ spec:
               name: code
               mountPath: /var/www
             - name: config-volume
-              mountPath: /etc/config  
+              mountPath: /etc/config
+            - name: secret-volume
+              mountPath: /etc/secret-volume
       containers: 
         - 
           image: franslourens/nginx-laravel
@@ -133,3 +138,6 @@ spec:
             - 
               name: sock
               mountPath: /socket
+            -
+              name: secret-volume
+              mountPath: /etc/secret-volume
