@@ -31,7 +31,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Kubernetes') }} : <?php echo env("hostname"); ?>
+                        {{ config('app.name', 'Kubernetes') }} : <?php echo env("HOSTNAME"); ?>
                     </a>
                 </div>
 
