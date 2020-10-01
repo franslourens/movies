@@ -49,49 +49,6 @@ data:
   MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
   MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: sample-app-config
-data:
-  # ------------------------------------------------------------------------------
-  # app
-  # ------------------------------------------------------------------------------
-
-  APP_NAME: laravel
-  APP_ENV: local
-  APP_DEBUG: "true"
-  APP_URL: https://sample-laravel.localhost
-  #APP_KEY:
-
-  # NOTE: to use stern
-  LOG_CHANNEL: errorlog
-
-  # ------------------------------------------------------------------------------
-  # DB
-  # ------------------------------------------------------------------------------
-
-  DB_HOST: mysql
-  DB_USERNAME: root
-  DB_PASSWORD: root
-
-  DB_CONNECTION: mysql
-  DB_DATABASE: sample
-  DB_DATABASE_TEST: sample_test
-
-  REDIS_HOST: redis-master
-
-  # ------------------------------------------------------------------------------
-  # MAIL
-  # ------------------------------------------------------------------------------
-
-  MAIL_DRIVER: smtp
-  MAIL_HOST: smtp.mailtrap.io
-  MAIL_PORT: "2525"
-  MAIL_USERNAME: "null"
-  MAIL_PASSWORD: "null"
-  MAIL_ENCRYPTION: "null"
----
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
@@ -116,14 +73,14 @@ spec:
             name: laravel-todo
             items:
             - key: config
-              path: keys
+              path: .env
       initContainers:
         - args:
             - /bin/bash
             - -c
             - (chown -R app:www-data /app/ && cp -rp /app/ /var/www/movies/)
               && (chown -R app:www-data /var/www/movies/ && chown -R app:www-data /var/www/movies/bootstrap/cache)
-              && (chmod -R 775 /var/www/movies/storage && chmod -R 775 /var/www/movies/bootstrap/cache) && cp /etc/config/keys /var/www/movies/.env  && (php artisan config:cache || true)
+              && (chmod -R 775 /var/www/movies/storage && chmod -R 775 /var/www/movies/bootstrap/cache) && cp /app/config/.env /var/www/movies/.env  && (php artisan config:cache || true)
           image: franslourens/php-laravel
           name: artisan
           env:
@@ -139,14 +96,11 @@ spec:
               name: code
               mountPath: /var/www
             - name: config-volume
-              mountPath: /etc/config  
+              mountPath: /app/config  
       containers: 
         - 
           image: franslourens/nginx-laravel
           name: nginx
-          envFrom:
-            - configMapRef:
-                name: sample-app-config
           imagePullPolicy: Always
           ports: 
             - 
@@ -170,17 +124,8 @@ spec:
                 secretKeyRef:
                   name: mysqlpassword
                   key: mysqlpassword
-            - name: MEMCACHE_HOST
-              value: memcache-cluster-ip-service
-            - name: MEMCACHE_PORT
-              value: "11211"
-            - name: AUTH_HOST
-              value: client-cluster-ip-service
           imagePullPolicy: Always
           name: fpm
-          envFrom:
-            - configMapRef:
-                name: sample-app-config
           volumeMounts:
             - 
               name: code
