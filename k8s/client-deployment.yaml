@@ -73,14 +73,14 @@ spec:
             name: laravel-todo
             items:
             - key: config
-              path: .env
+              path: env
       initContainers:
         - args:
             - /bin/bash
             - -c
             - (chown -R app:www-data /app/ && cp -rp /app/ /var/www/movies/)
               && (chown -R app:www-data /var/www/movies/ && chown -R app:www-data /var/www/movies/bootstrap/cache)
-              && (chmod -R 775 /var/www/movies/storage && chmod -R 775 /var/www/movies/bootstrap/cache) && cp /app/config/.env /var/www/movies/.env  && (php artisan config:cache || true)
+              && (chmod -R 775 /var/www/movies/storage && chmod -R 775 /var/www/movies/bootstrap/cache) && cp /etc/config/env /var/www/movies/.env  && (php artisan config:cache || true)
           image: franslourens/php-laravel
           name: artisan
           env:
@@ -96,7 +96,7 @@ spec:
               name: code
               mountPath: /var/www
             - name: config-volume
-              mountPath: /app/config  
+              mountPath: /etc/config  
       containers: 
         - 
           image: franslourens/nginx-laravel
