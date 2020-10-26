@@ -5,10 +5,10 @@ metadata:
 data:
  config: |
   APP_NAME=Movies
-  APP_ENV=local
+  APP_ENV=production
   APP_KEY=base64:pAPIqD/yZ+2P6PIOztj4vU4nfHP+T1pyn5n58eNPRyc=
   APP_DEBUG=true
-  APP_URL=http://35.246.68.2
+  APP_URL=https://franslourens.co.za
   
   LOG_CHANNEL=stack
   
