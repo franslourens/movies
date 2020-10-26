@@ -8,10 +8,8 @@ docker push franslourens/php-laravel:$SHA
 docker push franslourens/nginx-laravel:$SHA
 
 kubectl apply -f k8s/database-persistent-volume-claim.yaml
-kubectl apply -f k8s/database-persistent-volume-claim.yaml
 kubectl apply -f k8s/mysql-cluster-ip-service.yaml
 kubectl apply -f k8s/mysql-deployment.yaml
-kubectl apply -f k8s/ingress-service.yaml
 kubectl apply -f k8s/client-cluster-ip-service.yaml
 kubectl apply -f k8s/client-deployment.yaml
 kubectl apply -f k8s/memcache-cluster-ip-service.yaml
