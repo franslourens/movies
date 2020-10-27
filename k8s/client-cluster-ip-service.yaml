@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    component: web
+    component: staging-web
   ports:
     - port: 80
       targetPort: 80
