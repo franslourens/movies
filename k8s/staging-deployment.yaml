@@ -56,7 +56,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata: 
-  name: client-deployment
+  name: staging-deployment
 spec: 
   replicas: 1
   selector: 
