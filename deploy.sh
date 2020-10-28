@@ -15,4 +15,4 @@ kubectl apply -f k8s/staging-deployment.yaml
 kubectl apply -f k8s/memcache-cluster-ip-service.yaml
 kubectl apply -f k8s/memcache-deployment.yaml
 
-kubectl set image deployments/client-deployment fpm=franslourens/php-laravel:$SHA
+kubectl set image deployments/staging-deployment fpm=franslourens/php-laravel:$SHA
