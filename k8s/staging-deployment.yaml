@@ -84,6 +84,9 @@ spec:
         - name: environment-secret
           secret:
             secretName: staging-environment
+        - name: my-pvc-nfs
+          persistentVolumeClaim:
+            claimName: nfs
       initContainers:
         - args:
             - /bin/bash
@@ -150,3 +153,5 @@ spec:
             -
               name: environment-secret
               mountPath: /etc/environment-secret
+            - name: my-pvc-nfs
+              mountPath: "/var/www/movies/nfs/"
