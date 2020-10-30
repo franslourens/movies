@@ -154,4 +154,4 @@ spec:
               name: environment-secret
               mountPath: /etc/environment-secret
             - name: my-pvc-nfs
-              mountPath: "/var/www/movies/nfs/"
+              mountPath: "/var/www/movies/public/nfs/"
