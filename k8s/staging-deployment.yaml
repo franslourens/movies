@@ -61,11 +61,11 @@ spec:
   replicas: 2
   selector: 
     matchLabels: 
-      component: staging-web
+      component: movies-web
   template: 
     metadata: 
       labels: 
-        component: staging-web
+        component: movies-web
     spec:
       volumes:
         - name: code
