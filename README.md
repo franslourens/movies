@@ -1,3 +1,3 @@
 # movies
 
-movies.franslourens.co.za
+https://movies.franslourens.co.za
